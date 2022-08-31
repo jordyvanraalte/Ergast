@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class SeasonDTO {
     private String season;
     private String pointSystem;
-    private ArrayList<DriverStandingDTO> DriverStandings;
-    private ArrayList<ConstructorStandingDTO> ConstructorStandings;
-    private ArrayList<RaceDTO> Races;
+    private ArrayList<DriverStandingDTO> driverStandings;
+    private ArrayList<ConstructorStandingDTO> constructorStandings;
+    private ArrayList<RaceDTO> races;
 
 }
