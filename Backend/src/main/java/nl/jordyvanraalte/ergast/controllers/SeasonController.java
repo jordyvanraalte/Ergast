@@ -1,22 +1,28 @@
 package nl.jordyvanraalte.ergast.controllers;
 
+import nl.jordyvanraalte.ergast.entities.season.Season;
+import nl.jordyvanraalte.ergast.services.SeasonService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @RequestMapping("/seasons")
 public class SeasonController {
 
+
+    @Autowired
+    private SeasonService seasonService;
+
     @RequestMapping(value="", method = RequestMethod.GET)
-    public List fetchSeasons(){
-        return new ArrayList();
+    public List<Season> fetchSeasons(){
+        return seasonService.fetchAll();
     }
 
-    @RequestMapping(value="/{seasonId}", method = RequestMethod.GET)
-    public Object fetchSeason(@PathVariable("seasonId")long id){
-        return new Object();
+    @RequestMapping(value="/{year}", method = RequestMethod.GET)
+    public Object fetchSeason(@PathVariable("year") String year){
+        return seasonService.fetch(year);
     }
 
     @RequestMapping(value="/{seasonId}/drivers", method = RequestMethod.GET)
