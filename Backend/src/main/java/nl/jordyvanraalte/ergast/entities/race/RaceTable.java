@@ -18,4 +18,5 @@ public class RaceTable extends Table {
     public List<Race> getRaces() {
         return races;
     }
+
 }

@@ -1,11 +1,15 @@
 package nl.jordyvanraalte.ergast.services.impl;
 
 import nl.jordyvanraalte.ergast.dto.SeasonsDTO;
+import nl.jordyvanraalte.ergast.dto.racedetail.GridDTO;
+import nl.jordyvanraalte.ergast.dto.racedetail.RaceDetailDTO;
+import nl.jordyvanraalte.ergast.dto.racedetail.RaceResultDTO;
 import nl.jordyvanraalte.ergast.dto.seasondetail.ConstructorStandingDTO;
 import nl.jordyvanraalte.ergast.dto.seasondetail.DriverStandingDTO;
 import nl.jordyvanraalte.ergast.dto.seasondetail.RaceDTO;
 import nl.jordyvanraalte.ergast.dto.seasondetail.SeasonDTO;
 import nl.jordyvanraalte.ergast.entities.Response;
+import nl.jordyvanraalte.ergast.entities.race.RaceResult;
 import nl.jordyvanraalte.ergast.entities.race.RaceTable;
 import nl.jordyvanraalte.ergast.entities.season.Season;
 import nl.jordyvanraalte.ergast.entities.season.SeasonTable;
@@ -70,6 +74,26 @@ public class SeasonServiceImpl implements SeasonService {
         return new SeasonDTO(year, "Default", getDriverStandings(year), getConstructorStandings(year), races);
     }
 
+    public RaceDetailDTO getRaceDetail(String year, String round)
+    {
+        ResponseEntity<Response<RaceTable>> response = restTemplate.exchange(String.format("%s/%s/%s/results.json", ergastUrl, year, round), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
+        List<RaceResultDTO> results = response.getBody().getMRData().getTable().getRaces().get(0).getResults().stream().map(result -> {
+            return new RaceResultDTO(result.getPosition(), result.getDriver(), Double.parseDouble(result.getPoints()));
+        }).collect(Collectors.toList());
+        return new RaceDetailDTO(getQualifyingResults(year, round), results);
+    }
+
+    private List<GridDTO> getQualifyingResults(String year, String round)
+    {
+        ResponseEntity<Response<RaceTable>> response = restTemplate.exchange(String.format("%s/%s/%s/qualifying.json", ergastUrl, year, round), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
+
+        return response.getBody().getMRData().getTable().getRaces().get(0).getQualifyingResults().stream().map(qualifyingResult -> {
+            return new GridDTO(qualifyingResult.getPosition(), qualifyingResult.getDriver(), qualifyingResult.getQ3());
+        }).collect(Collectors.toList());
+    }
+
+
+
     private List<DriverStandingDTO> getDriverStandings(String year)
     {
         ResponseEntity<Response<StandingTable<DriverStanding>>> response = restTemplate.exchange(String.format("%s/%s/driverStandings.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<StandingTable<DriverStanding>>>(){});
@@ -85,6 +109,8 @@ public class SeasonServiceImpl implements SeasonService {
             return new ConstructorStandingDTO(constructorStanding.getPosition(), constructorStanding.getConstructor(), Double.parseDouble(constructorStanding.getPoints()), Integer.parseInt(constructorStanding.getWins()));
         }).collect(Collectors.toList());
     }
+
+
 
 
 

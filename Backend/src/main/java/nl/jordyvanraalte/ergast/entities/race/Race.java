@@ -20,6 +20,9 @@ public class Race {
     @JsonProperty("Results")
     private List<RaceResult> results = null;
 
+    @JsonProperty("QualifyingResults")
+    private List<QualifyingResult> qualifyingResults;
+
     public String getSeason() {
         return season;
     }
@@ -46,5 +49,9 @@ public class Race {
 
     public List<RaceResult> getResults() {
         return results;
+    }
+
+    public List<QualifyingResult> getQualifyingResults() {
+        return qualifyingResults;
     }
 }
