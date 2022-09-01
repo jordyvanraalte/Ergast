@@ -31,7 +31,7 @@ public class MRData<T extends Table> {
     @JsonProperty("total")
     private String total;
 
-    @JsonAlias({"Table", "SeasonTable", "RaceTable"})
+    @JsonAlias({"Table", "SeasonTable", "RaceTable", "StandingsTable"})
     private T table;
 
     @JsonProperty("xmlns")

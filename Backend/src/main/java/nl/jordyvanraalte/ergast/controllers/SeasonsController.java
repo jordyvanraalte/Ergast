@@ -1,6 +1,7 @@
 package nl.jordyvanraalte.ergast.controllers;
 
 import nl.jordyvanraalte.ergast.dto.SeasonsDTO;
+import nl.jordyvanraalte.ergast.dto.seasondetail.SeasonDTO;
 import nl.jordyvanraalte.ergast.services.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,8 +20,8 @@ public class SeasonsController {
     }
 
     @RequestMapping(value="/{year}", method = RequestMethod.GET)
-    public Object fetchSeason(@PathVariable("year") String year){
-        return seasonService.fetch(year);
+    public SeasonDTO fetchSeason(@PathVariable("year") String year){
+        return seasonService.getSeason(year);
     }
 
 }
