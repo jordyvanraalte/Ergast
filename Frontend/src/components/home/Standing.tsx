@@ -1,11 +1,12 @@
 import React from "react";
 import Competitor from "../../lib/models/Competitor.model";
 import Standing from "../../lib/models/season-detail/Standing.model";
+import {plainToInstance} from "class-transformer";
 
 
 export interface IStanding {
     standingName: string,
-    standing: Standing<Competitor>[],
+    standing: Standing[],
 }
 
 const StandingComponent: React.FC<IStanding> = ({ standingName,standing }) => {
@@ -37,7 +38,7 @@ const StandingComponent: React.FC<IStanding> = ({ standingName,standing }) => {
                                     {standing.position}
                                 </td>
                                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                    test
+                                    {standing.competitor.name}
                                 </td>
                                 <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                     {standing.points}

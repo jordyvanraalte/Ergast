@@ -1,14 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {RootState, store} from "./Store";
-import DriverStanding from "../lib/models/season-detail/DriverStanding.model";
-import ConstructorStanding from "../lib/models/season-detail/ConstructorStanding.model";
 import Race from "../lib/models/season-detail/Race.model";
+import Standing from "../lib/models/season-detail/Standing.model";
 
 // Type for our state
 export interface SeasonState {
     currentSeason: string;
-    driverStandings: DriverStanding[];
-    constructorStandings: ConstructorStanding[];
+    driverStandings: Standing[];
+    constructorStandings: Standing[];
     races: Race[];
     pointSystem: any
 }

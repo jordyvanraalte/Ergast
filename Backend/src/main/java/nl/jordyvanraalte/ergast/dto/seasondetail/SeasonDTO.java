@@ -17,11 +17,11 @@ import java.util.List;
 public class SeasonDTO {
     private String season;
     private String pointSystem;
-    private List<DriverStandingDTO> driverStandings;
-    private List<ConstructorStandingDTO> constructorStandings;
+    private List<StandingDTO> driverStandings;
+    private List<StandingDTO> constructorStandings;
     private List<RaceDTO> races;
 
-    public SeasonDTO(String season, String pointSystem, List<DriverStandingDTO> driverStandings, List<ConstructorStandingDTO> constructorStandings, List<RaceDTO> races) {
+    public SeasonDTO(String season, String pointSystem, List<StandingDTO> driverStandings, List<StandingDTO> constructorStandings, List<RaceDTO> races) {
         this.season = season;
         this.pointSystem = pointSystem;
         this.driverStandings = driverStandings;
@@ -37,11 +37,11 @@ public class SeasonDTO {
         return pointSystem;
     }
 
-    public List<DriverStandingDTO> getDriverStandings() {
+    public List<StandingDTO> getDriverStandings() {
         return driverStandings;
     }
 
-    public List<ConstructorStandingDTO> getConstructorStandings() {
+    public List<StandingDTO> getConstructorStandings() {
         return constructorStandings;
     }
 

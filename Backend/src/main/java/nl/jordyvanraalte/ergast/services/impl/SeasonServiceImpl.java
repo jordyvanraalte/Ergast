@@ -1,15 +1,16 @@
 package nl.jordyvanraalte.ergast.services.impl;
 
+import nl.jordyvanraalte.ergast.dto.CompetitorDTO;
 import nl.jordyvanraalte.ergast.dto.SeasonsDTO;
 import nl.jordyvanraalte.ergast.dto.racedetail.GridDTO;
 import nl.jordyvanraalte.ergast.dto.racedetail.RaceDetailDTO;
 import nl.jordyvanraalte.ergast.dto.racedetail.RaceResultDTO;
-import nl.jordyvanraalte.ergast.dto.seasondetail.ConstructorStandingDTO;
-import nl.jordyvanraalte.ergast.dto.seasondetail.DriverStandingDTO;
 import nl.jordyvanraalte.ergast.dto.seasondetail.RaceDTO;
 import nl.jordyvanraalte.ergast.dto.seasondetail.SeasonDTO;
+import nl.jordyvanraalte.ergast.dto.seasondetail.StandingDTO;
+import nl.jordyvanraalte.ergast.entities.Constructor;
+import nl.jordyvanraalte.ergast.entities.Driver;
 import nl.jordyvanraalte.ergast.entities.Response;
-import nl.jordyvanraalte.ergast.entities.race.RaceResult;
 import nl.jordyvanraalte.ergast.entities.race.RaceTable;
 import nl.jordyvanraalte.ergast.entities.season.Season;
 import nl.jordyvanraalte.ergast.entities.season.SeasonTable;
@@ -64,7 +65,6 @@ public class SeasonServiceImpl implements SeasonService {
     }
 
 
-
     @Override
     public SeasonDTO getSeason(String year) {
         ResponseEntity<Response<RaceTable>> response = restTemplate.exchange(String.format("%s/%s/results.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
@@ -78,7 +78,7 @@ public class SeasonServiceImpl implements SeasonService {
     {
         ResponseEntity<Response<RaceTable>> response = restTemplate.exchange(String.format("%s/%s/%s/results.json", ergastUrl, year, round), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
         List<RaceResultDTO> results = response.getBody().getMRData().getTable().getRaces().get(0).getResults().stream().map(result -> {
-            return new RaceResultDTO(result.getPosition(), result.getDriver(), Double.parseDouble(result.getPoints()));
+            return new RaceResultDTO(result.getPosition(), createDriverDTO(result.getDriver()), Double.parseDouble(result.getPoints()));
         }).collect(Collectors.toList());
         return new RaceDetailDTO(getQualifyingResults(year, round), results);
     }
@@ -88,26 +88,35 @@ public class SeasonServiceImpl implements SeasonService {
         ResponseEntity<Response<RaceTable>> response = restTemplate.exchange(String.format("%s/%s/%s/qualifying.json", ergastUrl, year, round), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
 
         return response.getBody().getMRData().getTable().getRaces().get(0).getQualifyingResults().stream().map(qualifyingResult -> {
-            return new GridDTO(qualifyingResult.getPosition(), qualifyingResult.getDriver(), qualifyingResult.getQ3());
+            return new GridDTO(qualifyingResult.getPosition(), createDriverDTO(qualifyingResult.getDriver()), qualifyingResult.getQ3());
         }).collect(Collectors.toList());
     }
 
-
-
-    private List<DriverStandingDTO> getDriverStandings(String year)
+    private List<StandingDTO> getDriverStandings(String year)
     {
         ResponseEntity<Response<StandingTable<DriverStanding>>> response = restTemplate.exchange(String.format("%s/%s/driverStandings.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<StandingTable<DriverStanding>>>(){});
         return response.getBody().getMRData().getTable().getStandings().get(0).getCompetitorStandings().stream().map(driverStanding -> {
-            return new DriverStandingDTO(driverStanding.getPosition(), driverStanding.getDriver(), Double.parseDouble(driverStanding.getPoints()), Integer.parseInt(driverStanding.getWins()));
+            return new StandingDTO(driverStanding.getPosition(), createDriverDTO(driverStanding.getDriver()), Double.parseDouble(driverStanding.getPoints()), Integer.parseInt(driverStanding.getWins()));
         }).collect(Collectors.toList());
     }
 
-    private List<ConstructorStandingDTO> getConstructorStandings(String year)
+    private List<StandingDTO> getConstructorStandings(String year)
     {
         ResponseEntity<Response<StandingTable<ConstructorStanding>>> response = restTemplate.exchange(String.format("%s/%s/constructorStandings.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<StandingTable<ConstructorStanding>>>(){});
         return response.getBody().getMRData().getTable().getStandings().get(0).getCompetitorStandings().stream().map(constructorStanding -> {
-            return new ConstructorStandingDTO(constructorStanding.getPosition(), constructorStanding.getConstructor(), Double.parseDouble(constructorStanding.getPoints()), Integer.parseInt(constructorStanding.getWins()));
+            return new StandingDTO(constructorStanding.getPosition(), createConstructorDTO(constructorStanding.getConstructor()), Double.parseDouble(constructorStanding.getPoints()), Integer.parseInt(constructorStanding.getWins()));
         }).collect(Collectors.toList());
+    }
+
+
+    private CompetitorDTO createDriverDTO(Driver driver)
+    {
+        return new CompetitorDTO(driver.getDriverId(), driver.getGivenName() + " " + driver.getFamilyName());
+    }
+
+    private CompetitorDTO createConstructorDTO(Constructor constructor)
+    {
+        return new CompetitorDTO(constructor.getConstructorId(), constructor.getName());
     }
 
 

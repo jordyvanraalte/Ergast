@@ -31,6 +31,7 @@ const SeasonComponent: React.FC = () => {
 
         const fetchSeason = async () => {
             const season = await api.seasons.fetchOne("2021");
+            console.log(season)
             dispatch(setCurrentSeason("2021"))
             dispatch(setDriverStandings(season.driverStandings))
             dispatch(setConstructorStandings(season.constructorStandings))
