@@ -24,10 +24,14 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import static java.util.stream.Collectors.collectingAndThen;
+import static java.util.stream.Collectors.toCollection;
+import static java.util.Comparator.comparingInt;
 import org.springframework.web.client.RestTemplate;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
 @Service
@@ -67,11 +71,30 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Override
     public SeasonDTO getSeason(String year) {
-        ResponseEntity<Response<RaceTable>> response = restTemplate.exchange(String.format("%s/%s/results.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
-        List<RaceDTO> races = response.getBody().getMRData().getTable().getRaces().stream().map(race -> {
-           return new RaceDTO(race.getRound(), race.getUrl(), race.getRaceName(), race.getDate(), race.getTime());
-        }).collect(Collectors.toList());
-        return new SeasonDTO(year, "Default", getDriverStandings(year), getConstructorStandings(year), races);
+
+        ResponseEntity<Response<RaceTable>> firstResponse = restTemplate.exchange(String.format("%s%s/results.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
+        HashSet<RaceDTO> races = new HashSet<>(firstResponse.getBody().getMRData().getTable().getRaces().stream().map(race -> {
+            return new RaceDTO(Integer.parseInt(race.getRound()), race.getUrl(), race.getRaceName(), race.getDate(), race.getTime());
+        }).collect(Collectors.toSet()));
+
+        int offset = Integer.parseInt(firstResponse.getBody().getMRData().getLimit());
+        int total = Integer.parseInt(firstResponse.getBody().getMRData().getTotal());
+        while(offset < total) {
+            ResponseEntity<Response<RaceTable>> response = restTemplate.exchange(String.format("%s%s/results.json?offset=%d", ergastUrl, year, offset), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
+            races.addAll(response.getBody().getMRData().getTable().getRaces().stream().map(race -> {
+                return new RaceDTO(Integer.parseInt(race.getRound()), race.getUrl(), race.getRaceName(), race.getDate(), race.getTime());
+            }).collect(Collectors.toSet()));
+            offset += Integer.parseInt(response.getBody().getMRData().getLimit());
+        }
+
+
+        return new SeasonDTO(year, "Default", getDriverStandings(year), getConstructorStandings(year), races.stream().sorted(new Comparator<RaceDTO>() {
+            @Override
+            public int compare(RaceDTO o1, RaceDTO o2) {
+                return o1.getRound() - o2.getRound();
+            }
+        }).collect(collectingAndThen(toCollection(() -> new TreeSet<RaceDTO>(comparingInt(RaceDTO::getRound))),
+                ArrayList::new)));
     }
 
     public RaceDetailDTO getRaceDetail(String year, String round)
