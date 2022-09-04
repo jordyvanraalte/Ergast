@@ -34,6 +34,6 @@ export const raceSlice = createSlice({
 
 export const { setCurrentRace, setGrid, setResults } = raceSlice.actions;
 
-export const selectRaceState = (state: RootState) => state;
+export const selectRaceState = (state: RootState) => state.race;
 
 export default raceSlice.reducer;

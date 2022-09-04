@@ -10,6 +10,6 @@ import java.util.List;
 
 public interface SeasonService {
     List<SeasonsDTO> getAll();
-    SeasonDTO getSeason(String year);
+    SeasonDTO getSeason(String year, String scoringSystem);
     RaceDetailDTO getRaceDetail(String year, String round);
 }

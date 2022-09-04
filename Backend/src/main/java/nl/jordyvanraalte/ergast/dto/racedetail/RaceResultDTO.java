@@ -13,4 +13,16 @@ public class RaceResultDTO {
         this.competitor = competitor;
         this.points = points;
     }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public CompetitorDTO getCompetitor() {
+        return competitor;
+    }
+
+    public double getPoints() {
+        return points;
+    }
 }

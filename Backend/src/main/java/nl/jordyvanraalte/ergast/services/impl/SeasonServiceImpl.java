@@ -17,6 +17,7 @@ import nl.jordyvanraalte.ergast.entities.season.SeasonTable;
 import nl.jordyvanraalte.ergast.entities.standings.ConstructorStanding;
 import nl.jordyvanraalte.ergast.entities.standings.DriverStanding;
 import nl.jordyvanraalte.ergast.entities.standings.StandingTable;
+import nl.jordyvanraalte.ergast.services.ScoringService;
 import nl.jordyvanraalte.ergast.services.SeasonService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -42,6 +43,9 @@ public class SeasonServiceImpl implements SeasonService {
 
     @Autowired
     RestTemplate restTemplate;
+
+    @Autowired
+    ScoringService scoringService;
 
     public SeasonServiceImpl()
     {
@@ -70,8 +74,7 @@ public class SeasonServiceImpl implements SeasonService {
 
 
     @Override
-    public SeasonDTO getSeason(String year) {
-
+    public SeasonDTO getSeason(String year, String scoringSystem) {
         ResponseEntity<Response<RaceTable>> firstResponse = restTemplate.exchange(String.format("%s%s/results.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<RaceTable>>(){});
         HashSet<RaceDTO> races = new HashSet<>(firstResponse.getBody().getMRData().getTable().getRaces().stream().map(race -> {
             return new RaceDTO(Integer.parseInt(race.getRound()), race.getUrl(), race.getRaceName(), race.getDate(), race.getTime());
@@ -88,7 +91,7 @@ public class SeasonServiceImpl implements SeasonService {
         }
 
 
-        return new SeasonDTO(year, "Default", getDriverStandings(year), getConstructorStandings(year), races.stream().sorted(new Comparator<RaceDTO>() {
+        return new SeasonDTO(year, "Default", getDriverStandings(year, scoringSystem), getConstructorStandings(year, scoringSystem), races.stream().sorted(new Comparator<RaceDTO>() {
             @Override
             public int compare(RaceDTO o1, RaceDTO o2) {
                 return o1.getRound() - o2.getRound();
@@ -115,21 +118,38 @@ public class SeasonServiceImpl implements SeasonService {
         }).collect(Collectors.toList());
     }
 
-    private List<StandingDTO> getDriverStandings(String year)
+    private List<StandingDTO> getDriverStandings(String year, String scoringSystem)
     {
         ResponseEntity<Response<StandingTable<DriverStanding>>> response = restTemplate.exchange(String.format("%s/%s/driverStandings.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<StandingTable<DriverStanding>>>(){});
         return response.getBody().getMRData().getTable().getStandings().get(0).getCompetitorStandings().stream().map(driverStanding -> {
+
+            if(scoringService.doesScoringExist(scoringSystem))
+            {
+                return new StandingDTO(driverStanding.getPosition(), createDriverDTO(driverStanding.getDriver()), scoringService.getPoints(scoringSystem, driverStanding.getPosition()), Integer.parseInt(driverStanding.getWins()));
+            }
+
             return new StandingDTO(driverStanding.getPosition(), createDriverDTO(driverStanding.getDriver()), Double.parseDouble(driverStanding.getPoints()), Integer.parseInt(driverStanding.getWins()));
         }).collect(Collectors.toList());
     }
 
-    private List<StandingDTO> getConstructorStandings(String year)
+    private List<StandingDTO> getConstructorStandings(String year, String scoringSystem)
     {
         ResponseEntity<Response<StandingTable<ConstructorStanding>>> response = restTemplate.exchange(String.format("%s/%s/constructorStandings.json", ergastUrl, year), HttpMethod.GET, null, new ParameterizedTypeReference<Response<StandingTable<ConstructorStanding>>>(){});
+
+
+
         return response.getBody().getMRData().getTable().getStandings().get(0).getCompetitorStandings().stream().map(constructorStanding -> {
+            if(scoringService.doesScoringExist(scoringSystem))
+            {
+                return new StandingDTO(constructorStanding.getPosition(), createConstructorDTO(constructorStanding.getConstructor()), scoringService.getPoints(scoringSystem, constructorStanding.getPosition()), Integer.parseInt(constructorStanding.getWins()));
+            }
+
+
             return new StandingDTO(constructorStanding.getPosition(), createConstructorDTO(constructorStanding.getConstructor()), Double.parseDouble(constructorStanding.getPoints()), Integer.parseInt(constructorStanding.getWins()));
         }).collect(Collectors.toList());
     }
+
+
 
 
     private CompetitorDTO createDriverDTO(Driver driver)

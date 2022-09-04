@@ -13,4 +13,16 @@ public class GridDTO {
         this.competitor = competitor;
         this.qualifyTime = qualifyTime;
     }
+
+    public String getPosition() {
+        return position;
+    }
+
+    public CompetitorDTO getCompetitor() {
+        return competitor;
+    }
+
+    public String getQualifyTime() {
+        return qualifyTime;
+    }
 }

@@ -21,8 +21,8 @@ public class SeasonsController {
     }
 
     @RequestMapping(value="/{year}", method = RequestMethod.GET)
-    public SeasonDTO fetchSeason(@PathVariable("year") String year){
-        return seasonService.getSeason(year);
+    public SeasonDTO fetchSeason(@PathVariable("year") String year, @RequestParam(required = false, defaultValue = "", value="scoring") String scoring){
+        return seasonService.getSeason(year, scoring);
     }
 
 }

@@ -1,9 +1,11 @@
 import { configureStore, ThunkAction, Action } from "@reduxjs/toolkit";
 import { seasonSlice} from "./SeasonSlice";
+import {raceSlice} from "./RaceSlice";
 
 export const store = configureStore({
         reducer: {
             [seasonSlice.name]: seasonSlice.reducer,
+            [raceSlice.name]: raceSlice.reducer
         },
         devTools: true,
     });

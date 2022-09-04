@@ -1,5 +1,9 @@
 import React from "react";
 import Race from "../../lib/models/season-detail/Race.model";
+import {useNavigate} from "react-router-dom";
+import {useSelector} from "react-redux";
+import {selectSeasonState} from "../../store/SeasonSlice";
+
 
 
 export interface IRaces  {
@@ -7,8 +11,11 @@ export interface IRaces  {
 }
 
 const RacesComponent: React.FC<IRaces> = ({ races}) => {
-    const onRaceClick = () => {
+    const navigate = useNavigate();
+    const year = useSelector(selectSeasonState).currentSeason
 
+    const onRaceClick = (race: Race): any => {
+        navigate(`/race/${year}/${race.round}`, { replace: true })
     }
 
     return (
@@ -36,7 +43,7 @@ const RacesComponent: React.FC<IRaces> = ({ races}) => {
                     </thead>
                     <tbody>
                     {races.map((race, index) => {
-                        return (<tr key={index} className="border-b">
+                        return (<tr onClick={() => onRaceClick(race)} key={index} className="border-b">
                             <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 {race.round}
                             </th>

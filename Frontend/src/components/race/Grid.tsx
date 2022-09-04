@@ -1,9 +1,14 @@
 import React from "react";
+import Grid from "../../lib/models/race-detail/Grid.model";
 
+export interface IGrid {
+    grid: Grid[]
+}
 
-const Grid: React.FC = () => {
+const GridComponent: React.FC<IGrid> = ({ grid }) => {
     return (
-        <div className="h-fit overflow-x-auto relative shadow-md sm:rounded-lg m-5 bg-white">
+        <div className="relative h-full mx-5">
+        <div className="h-full overflow-x-auto relative shadow-md sm:rounded-lg m-5 bg-white">
             <table className="text-sm text-left">
                 <thead className="border-b border-gray-400">
                     <tr className="border-b border-gray-400">
@@ -21,29 +26,34 @@ const Grid: React.FC = () => {
                     </tr>
                 </thead>
                 <tbody>
-                <tr className="bg-white border-b">
-                    <td scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                        Max Verstappen (Red Bull Racing)
-                    </td>
-                    <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                    </td>
-                    <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap border-l border-gray-400">
-                        Qualifiying time
-                    </td>
-                </tr>
-                <tr className="bg-white border-b">
-                    <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                    </th>
-                    <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                        Charles Leclerc (Ferrari)
-                    </td>
-                    <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap border-l border-gray-400">
-                        Qualifiying time
-                    </td>
-                </tr>
+                {grid.map((gridObject, index) => {
+                    return(
+                        index % 2 === 0 ? (
+                            <tr key={gridObject.position} className="bg-white border-b">
+                            <td scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                {gridObject.competitor.name}
+                            </td>
+                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                            </td>
+                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap border-l border-gray-400">
+                                {gridObject.qualifyTime}
+                            </td>
+                        </tr>) : <tr key={gridObject.position} className="bg-white border-b">
+                            <td scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                            </td>
+                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                {gridObject.competitor.name}
+                            </td>
+                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap border-l border-gray-400">
+                                {gridObject.qualifyTime}
+                            </td>
+                        </tr>
+                    )
+                })}
                 </tbody>
             </table>
+        </div>
         </div>)
 }
 
-export default Grid;
+export default GridComponent;
