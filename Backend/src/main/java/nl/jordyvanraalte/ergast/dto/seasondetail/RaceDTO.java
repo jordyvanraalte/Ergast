@@ -14,13 +14,13 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
         "time",
 })
 public class RaceDTO {
-    private int round;
+    private String round;
     private String url;
     private String raceName;
     private String date;
     private String time;
 
-    public RaceDTO(int round, String url, String raceName, String date, String time) {
+    public RaceDTO(String round, String url, String raceName, String date, String time) {
         this.round = round;
         this.url = url;
         this.raceName = raceName;
@@ -28,7 +28,7 @@ public class RaceDTO {
         this.time = time;
     }
 
-    public int getRound() {
+    public String getRound() {
         return round;
     }
 

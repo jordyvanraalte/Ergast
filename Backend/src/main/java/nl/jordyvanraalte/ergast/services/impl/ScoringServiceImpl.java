@@ -3,7 +3,10 @@ package nl.jordyvanraalte.ergast.services.impl;
 import nl.jordyvanraalte.ergast.services.ScoringService;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ScoringServiceImpl implements ScoringService {
@@ -46,6 +49,10 @@ public class ScoringServiceImpl implements ScoringService {
         return scoringMap.containsKey(scoringSystem);
     }
 
+    public List<String> getScoringSystems() {
+        return new ArrayList<>(scoringMap.keySet());
+    }
+
     public double getPoints(String scoringSystem, String position)
     {
         if(Integer.parseInt(position) > 10)
@@ -53,8 +60,6 @@ public class ScoringServiceImpl implements ScoringService {
             return 0;
         }
 
-        System.out.println("Scoring system: " + scoringSystem);
-        System.out.println("Position: " + position);
         return scoringMap.get(scoringSystem).get(position);
     }
 

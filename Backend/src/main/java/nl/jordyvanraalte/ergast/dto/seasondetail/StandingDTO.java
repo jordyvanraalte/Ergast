@@ -18,13 +18,11 @@ public class StandingDTO {
     private CompetitorDTO competitor;
     //double due to possibility of comma values (Belgium Grand prix 2021)
     private double points;
-    private int wins;
 
-    public StandingDTO(String position, CompetitorDTO competitor, double points, int wins) {
+    public StandingDTO(String position, CompetitorDTO competitor, double points) {
         this.position = position;
         this.competitor = competitor;
         this.points = points;
-        this.wins = wins;
     }
 
     public String getPosition() {
@@ -37,9 +35,5 @@ public class StandingDTO {
 
     public double getPoints() {
         return points;
-    }
-
-    public int getWins() {
-        return wins;
     }
 }

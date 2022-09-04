@@ -1,15 +1,16 @@
 package nl.jordyvanraalte.ergast.services;
 
 import nl.jordyvanraalte.ergast.dto.SeasonsDTO;
-import nl.jordyvanraalte.ergast.dto.racedetail.RaceDetailDTO;
-import nl.jordyvanraalte.ergast.dto.seasondetail.SeasonDTO;
-import nl.jordyvanraalte.ergast.entities.race.RaceTable;
-import nl.jordyvanraalte.ergast.entities.season.Season;
+import nl.jordyvanraalte.ergast.dto.seasondetail.RaceDTO;
+import nl.jordyvanraalte.ergast.dto.seasondetail.StandingDTO;
 
 import java.util.List;
 
 public interface SeasonService {
-    List<SeasonsDTO> getAll();
-    SeasonDTO getSeason(String year, String scoringSystem);
-    RaceDetailDTO getRaceDetail(String year, String round);
+    List<SeasonsDTO> getAll() throws Exception;
+    List<StandingDTO> getSeasonConstructors(String season) throws Exception;
+    List<StandingDTO> getSeasonDrivers(String season) throws Exception;
+    List<StandingDTO> getSeasonDriversWithDifferentScoring(String season, String scoring) throws Exception;
+    List<StandingDTO> getSeasonConstructorsWithDifferentScoring(String season, String scoring) throws Exception;
+    List<RaceDTO> getSeasonRaces(String season) throws Exception;
 }

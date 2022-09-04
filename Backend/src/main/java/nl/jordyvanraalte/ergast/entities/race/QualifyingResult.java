@@ -17,6 +17,12 @@ public class QualifyingResult {
     @JsonProperty("Q3")
     private String q3;
 
+    @JsonProperty("Q2")
+    private String q2;
+
+    @JsonProperty("Q1")
+    private String q1;
+
     public String getNumber() {
         return number;
     }
@@ -35,5 +41,13 @@ public class QualifyingResult {
 
     public String getQ3() {
         return q3;
+    }
+
+    public String getQ2() {
+        return q2;
+    }
+
+    public String getQ1() {
+        return q1;
     }
 }

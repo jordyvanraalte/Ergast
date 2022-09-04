@@ -25,4 +25,12 @@ public class RaceResultDTO {
     public double getPoints() {
         return points;
     }
+
+    public void setPoints(double points) {
+        this.points = points;
+    }
+
+    public String getCompetitorName(){
+        return competitor.getName();
+    }
 }
