@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .addFilterBefore(
                         new ApiKeyAuthenticationFilter(authenticationManager()),
-                        AnonymousAuthenticationFilter.class);
+                        AnonymousAuthenticationFilter.class).cors();
     }
 
     @Bean
