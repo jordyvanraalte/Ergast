@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import Standing from "./Standing";
 import Races from "./Races";
-import Select, {OnSelect} from "./Select";
+import Select from "./Select";
 import api from "../../lib/api";
 import {useAppDispatch, useAppSelector} from "../../store/Hooks";
 import {

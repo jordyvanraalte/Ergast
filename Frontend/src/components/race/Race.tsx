@@ -3,7 +3,6 @@ import Grid from "./Grid";
 import Results from "./Result";
 import BackButton from "./BackButton";
 import api from "../../lib/api";
-import {setConstructorStandings, setCurrentSeason, setDriverStandings, setRaces} from "../../store/SeasonSlice";
 import {useParams} from "react-router";
 import {useAppDispatch} from "../../store/Hooks";
 import {selectRaceState, setGrid, setResults} from "../../store/RaceSlice";
