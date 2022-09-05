@@ -1,4 +1,3 @@
-import { useParams } from 'react-router';
 import Race from "../components/race/Race";
 
 

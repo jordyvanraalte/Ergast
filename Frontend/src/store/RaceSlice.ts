@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {RootState, store} from "./Store";
+import {RootState} from "./Store";
 
 // Type for our state
 export interface RaceState {

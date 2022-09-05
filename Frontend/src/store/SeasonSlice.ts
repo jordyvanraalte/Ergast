@@ -1,5 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
-import {RootState, store} from "./Store";
+import {RootState} from "./Store";
 import Race from "../lib/models/season-detail/Race.model";
 import Standing from "../lib/models/season-detail/Standing.model";
 
