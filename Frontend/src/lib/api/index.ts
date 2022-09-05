@@ -1,5 +1,5 @@
-import SeasonsEndpoint from "./endpoints/Seasons.api";
-import RaceEndpoint from "./endpoints/Races.api";
+import SeasonsEndpoint from "./endpoints/Season.api";
+import RaceEndpoint from "./endpoints/Race.api";
 import ScoreEndpoint from "./endpoints/Score.api";
 
 const api = {
