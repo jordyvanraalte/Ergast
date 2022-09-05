@@ -1,6 +1,4 @@
-import ApiEndpoint from "./api.endpoint";
-import Season from "../../models/Season.model";
-import Race from "../../models/season-detail/Race.model";
+import ApiEndpoint from "./Api.endpoint";
 import RaceDetail from "../../models/race-detail/RaceDetail.model";
 
 export default class RaceEndpoint extends ApiEndpoint {

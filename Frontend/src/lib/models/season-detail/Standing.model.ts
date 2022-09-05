@@ -1,5 +1,4 @@
 import Competitor from "../Competitor.model";
-import {Type} from "class-transformer";
 
 export default class Standing {
     public competitor: Competitor;

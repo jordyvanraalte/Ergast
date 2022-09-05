@@ -1,6 +1,5 @@
-import {plainToClass, plainToInstance} from "class-transformer";
 import Season from "../../models/Season.model";
-import ApiEndpoint from "./api.endpoint";
+import ApiEndpoint from "./Api.endpoint";
 import SeasonDetail from "../../models/season-detail/SeasonDetail.model";
 
 export default class SeasonsEndpoint extends ApiEndpoint {

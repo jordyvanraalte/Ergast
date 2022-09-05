@@ -1,7 +1,5 @@
 import React from "react";
-import Competitor from "../../lib/models/Competitor.model";
 import Standing from "../../lib/models/season-detail/Standing.model";
-import {plainToInstance} from "class-transformer";
 
 
 export interface IStanding {
