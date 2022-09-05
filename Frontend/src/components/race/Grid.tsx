@@ -8,7 +8,7 @@ export interface IGrid {
 const GridComponent: React.FC<IGrid> = ({ grid }) => {
     return (
         <div className="relative h-full mx-5">
-        <div className="h-full overflow-x-auto relative shadow-md sm:rounded-lg m-5 bg-white">
+        <div className="h-full overflow-x-auto relative shadow-md sm:rounded-lg m-5 bg-white bg-opacity-90">
             <table className="text-sm text-left">
                 <thead className="border-b border-gray-400">
                     <tr className="border-b border-gray-400">
@@ -16,7 +16,7 @@ const GridComponent: React.FC<IGrid> = ({ grid }) => {
                             Starting grid
                         </th>
                     </tr>
-                    <tr className="text-xs text-gray-700 uppercase bg-gray-50">
+                    <tr className="text-xs text-gray-700 uppercase bg-opacity-90 bg-gray-50">
                         <th scope="col" colSpan={2} className="py-3 px-6">
                             Position
                         </th>
@@ -29,7 +29,7 @@ const GridComponent: React.FC<IGrid> = ({ grid }) => {
                 {grid.map((gridObject, index) => {
                     return(
                         index % 2 === 0 ? (
-                            <tr key={gridObject.position} className="bg-white border-b">
+                            <tr key={gridObject.position} className="border-b">
                             <td scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 {gridObject.competitor.name}
                             </td>
@@ -38,7 +38,7 @@ const GridComponent: React.FC<IGrid> = ({ grid }) => {
                             <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap border-l border-gray-400">
                                 {gridObject.qualifyTime}
                             </td>
-                        </tr>) : <tr key={gridObject.position} className="bg-white border-b">
+                        </tr>) : <tr key={gridObject.position} className="border-b">
                             <td scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                             </td>
                             <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">

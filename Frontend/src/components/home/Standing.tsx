@@ -12,21 +12,23 @@ export interface IStanding {
 const StandingComponent: React.FC<IStanding> = ({ standingName,standing }) => {
     return (
         <div className="relative h-full mx-5">
-            <div className="shadow-md rounded bg-white bg-opacity-90 my-5 text-center">
-                <span className="px-5 my-5 text-3xl">{standingName}</span>
-            </div>
             <div className="h-full overflow-y-auto shadow-md rounded bg-white bg-opacity-90">
                 <table className="table-auto w-full">
-                    <thead className="text-xs text-gray-700 uppercase">
-                    <tr>
-                        <th scope="col" className="py-3 px-4">
+                    <thead className="border-b border-gray-400">
+                    <tr className="border-b border-gray-400">
+                        <th scope="col" className="py-3 px-6 text-2xl font-black font-bold">
+                            {standingName}
+                        </th>
+                    </tr>
+                    <tr className="text-xs text-gray-700 uppercase bg-gray-50 bg-opacity-90">
+                        <th scope="col" className="py-3 px-6">
                             Position
                         </th>
                         <th scope="col" className="py-3 px-6">
                             Name
                         </th>
                         <th scope="col" className="py-3 px-6">
-                            Points
+                            Score
                         </th>
                     </tr>
                     </thead>
@@ -34,14 +36,14 @@ const StandingComponent: React.FC<IStanding> = ({ standingName,standing }) => {
                     {standing.map((standing, index) => {
                         return (
                             <tr key={index} className="border-b">
-                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-center">
                                     {standing.position}
                                 </td>
-                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-center">
                                     {standing.competitor.name}
                                 </td>
-                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                                    {standing.points}
+                                <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap text-center">
+                                    {standing.score}
                                 </td>
                             </tr>)
                     })}

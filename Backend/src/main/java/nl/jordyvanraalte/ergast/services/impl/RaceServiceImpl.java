@@ -29,6 +29,10 @@ public class RaceServiceImpl implements RaceService {
         var raceTables = raceTableService.FetchALL(String.format("%s/%s/qualifying.json", year, round), new ParameterizedTypeReference<Response<RaceTable>>() {});
         ArrayList<GridDTO> grid = new ArrayList<>();
         raceTables.forEach(raceTable -> {
+            if(raceTable.getRaces().size() == 0){
+                return;
+            }
+
             raceTable.getRaces().get(0).getQualifyingResults().forEach(qualifyingResult -> {
                 grid.add(new GridDTO(qualifyingResult.getPosition(), createDriverDTO(qualifyingResult.getDriver()), processQualifyingTime(qualifyingResult)));
             });

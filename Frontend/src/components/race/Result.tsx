@@ -8,7 +8,7 @@ export interface IResults {
 const Results: React.FC<IResults> = ({ results }) => {
     return (
         <div className="relative h-full mx-5">
-        <div className="h-full overflow-x-auto relative shadow-md sm:rounded-lg m-5 bg-white">
+        <div className="h-full overflow-x-auto relative shadow-md sm:rounded-lg m-5 bg-white bg-opacity-90">
             <table className="text-sm text-left">
                 <thead className="border-b border-gray-400">
                 <tr className="border-b border-gray-400">
@@ -16,7 +16,7 @@ const Results: React.FC<IResults> = ({ results }) => {
                         Race Results
                     </th>
                 </tr>
-                <tr className="text-xs text-gray-700 uppercase bg-gray-50">
+                <tr className="text-xs text-gray-700 uppercase bg-gray-50 bg-opacity-90">
                     <th scope="col" className="py-3 px-6">
                         Driver
                     </th>
@@ -30,15 +30,15 @@ const Results: React.FC<IResults> = ({ results }) => {
                 </thead>
                 <tbody>
                 {results.map((result, index) => {
-                    return (                <tr className="bg-white border-b">
-                        <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                    return (                <tr className= "border-b">
+                        <td className="py-4 px-6 font-medium text-gray-900  whitespace-nowrap">
                             {result.competitor.name}
                         </td>
                         <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                             {result.position}
                         </td>
                         <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
-                            {result.points}
+                            {result.score}
                         </td>
                     </tr>)
                 })}

@@ -77,6 +77,9 @@ public class SeasonServiceImpl implements SeasonService {
         var standingsTables = constructorStandingTableService.FetchALL(season + "/constructorStandings.json", new ParameterizedTypeReference<Response<StandingTable<ConstructorStanding>>>() {});
         var standings = new ArrayList<StandingDTO>();
         standingsTables.forEach(standing -> {
+            if(standing.getStandings().size() == 0)
+                return;
+
             standing.getStandings().get(0).getCompetitorStandings().forEach(constructorStanding -> {
                 var constructor = constructorStanding.getConstructor();
                 var standingDTO = new StandingDTO(constructorStanding.getPosition(), createConstructorDTO(constructor), Double.parseDouble(constructorStanding.getPoints()));
@@ -91,6 +94,9 @@ public class SeasonServiceImpl implements SeasonService {
         var standingsTables = driverStandingTableService.FetchALL(season + "/driverStandings.json", new ParameterizedTypeReference<Response<StandingTable<DriverStanding>>>() {});
         var standings = new ArrayList<StandingDTO>();
         standingsTables.forEach(standing -> {
+            if(standing.getStandings().size() == 0)
+                return;
+
             standing.getStandings().get(0).getCompetitorStandings().forEach(driverStanding -> {
                 var driver = driverStanding.getDriver();
                 var standingDTO = new StandingDTO(driverStanding.getPosition(), createDriverDTO(driver), Double.parseDouble(driverStanding.getPoints()));
@@ -126,7 +132,7 @@ public class SeasonServiceImpl implements SeasonService {
 
         HashMap<CompetitorDTO, Double> driverScores = new HashMap<>();
         groupedResults.forEach((driver, results) -> {
-            var totalScore = results.stream().mapToDouble(RaceResultDTO::getPoints).sum();
+            var totalScore = results.stream().mapToDouble(RaceResultDTO::getScore).sum();
             driverScores.put(driver, totalScore);
         });
         //then sort the map based on score
@@ -169,7 +175,7 @@ public class SeasonServiceImpl implements SeasonService {
 
         HashMap<CompetitorDTO, Double> constructorScores = new HashMap<>();
         groupedResults.forEach((constructor, results) -> {
-            var totalScore = results.stream().mapToDouble(RaceResultDTO::getPoints).sum();
+            var totalScore = results.stream().mapToDouble(RaceResultDTO::getScore).sum();
             constructorScores.put(constructor, totalScore);
         });
         //then sort the map based on score
