@@ -30,7 +30,7 @@ const GridComponent: React.FC<IGrid> = ({ grid }) => {
                     return(
                         index % 2 === 0 ? (
                             <tr key={gridObject.position} className="border-b">
-                            <td scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                            <td  className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 {gridObject.competitor.name}
                             </td>
                             <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
@@ -39,7 +39,7 @@ const GridComponent: React.FC<IGrid> = ({ grid }) => {
                                 {gridObject.qualifyTime}
                             </td>
                         </tr>) : <tr key={gridObject.position} className="border-b">
-                            <td scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
+                            <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                             </td>
                             <td className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 {gridObject.competitor.name}

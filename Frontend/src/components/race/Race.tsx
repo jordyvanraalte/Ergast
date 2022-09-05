@@ -30,7 +30,7 @@ const Race: React.FC = () => {
         };
         fetchGrid().catch(error => console.log(error));
 
-    }, []);
+    }, [year, round, dispatch]);
 
     return (<div className={"h-screen w-full"}>
         <BackButton />

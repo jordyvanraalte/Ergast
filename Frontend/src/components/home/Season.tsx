@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect} from "react";
 import Standing from "./Standing";
 import Races from "./Races";
 import Select from "./Select";
@@ -48,7 +48,7 @@ const SeasonComponent: React.FC = () => {
             dispatch(setScoresSystems(scoreSystem))
         }
         fetchPointSystems().catch(error => console.log(error))
-    }, []);
+    }, [seasonState.currentSeason, seasonState.scoreSystem, dispatch]);
 
     const selectedSeason = seasonState.currentSeason !== "" ? seasonState.currentSeason : "Current season"
     const selectedScoreSystem = seasonState.scoreSystem !== "" ? seasonState.scoreSystem : "Season's scoring systems (Default)"
