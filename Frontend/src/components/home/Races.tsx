@@ -20,13 +20,15 @@ const RacesComponent: React.FC<IRaces> = ({ races}) => {
 
     return (
         <div className="relative h-full mx-5">
-            <div className="shadow-md rounded bg-white bg-opacity-90 my-5 text-center">
-                <span className="px-5 my-5 text-3xl">Races</span>
-            </div>
             <div className="w-full h-full overflow-y-auto overflow-x-auto overflow-hidden shadow-md rounded bg-white bg-opacity-90">
                 <table className="table-auto w-full opacity-75">
-                    <thead className="text-xs text-gray-700 uppercase">
-                    <tr>
+                    <thead className="border-b border-gray-400">
+                    <tr className="border-b border-gray-400">
+                        <th scope="col" className="py-3 px-6 text-2xl font-black font-bold">
+                            Races
+                        </th>
+                    </tr>
+                    <tr className="text-xs text-gray-700 uppercase bg-gray-50 bg-opacity-90">
                         <th scope="col" className="py-3 px-6">
                             Round
                         </th>
@@ -43,7 +45,7 @@ const RacesComponent: React.FC<IRaces> = ({ races}) => {
                     </thead>
                     <tbody>
                     {races.map((race, index) => {
-                        return (<tr onClick={() => onRaceClick(race)} key={index} className="border-b">
+                        return (<tr onClick={() => onRaceClick(race)} key={index} className="border-b cursor-pointer">
                             <th scope="row" className="py-4 px-6 font-medium text-gray-900 whitespace-nowrap">
                                 {race.round}
                             </th>

@@ -18,13 +18,18 @@ const Race: React.FC = () => {
     const raceState = useSelector(selectRaceState)
 
     useEffect(() => {
-        const fetchRace = async () => {
-            const race = await api.races.fetch(year, round);
-            dispatch(setGrid(race.grid))
-
-            dispatch(setResults(race.results))
+        const fetchResult = async () => {
+            const result = await api.races.fetchRaceResult(year, round);
+            dispatch(setResults(result))
         };
-        fetchRace().catch(error => console.log(error));
+        fetchResult().catch(error => console.log(error));
+
+        const fetchGrid = async () => {
+            const grid = await api.races.fetchGrid(year, round);
+            dispatch(setGrid(grid))
+        };
+        fetchGrid().catch(error => console.log(error));
+
     }, []);
 
     return (<div className={"h-screen w-full"}>

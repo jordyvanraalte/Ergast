@@ -9,7 +9,9 @@ export interface SeasonState {
     driverStandings: Standing[];
     constructorStandings: Standing[];
     races: Race[];
-    pointSystem: any
+    seasons: string[]
+    scoreSystems: string[]
+    scoreSystem: string
 }
 
 // Initial state
@@ -18,7 +20,9 @@ const initialState: SeasonState = {
     driverStandings: [],
     constructorStandings: [],
     races: [],
-    pointSystem: {}
+    seasons: [],
+    scoreSystem: "",
+    scoreSystems: []
 };
 
 export const seasonSlice = createSlice({
@@ -38,15 +42,20 @@ export const seasonSlice = createSlice({
         setRaces(state, action) {
             state.races = action.payload;
         },
-        setPointSystem(state, action) {
-            state.pointSystem = action.payload
+        setSeasons(state, action) {
+            state.seasons = action.payload
+        },
+        setScoreSystem(state, action) {
+            state.scoreSystem = action.payload
+        },
+        setScoresSystems(state, action) {
+            state.scoreSystems = action.payload
         }
     },
 });
 
-export const { setCurrentSeason, setDriverStandings, setConstructorStandings, setRaces, setPointSystem } = seasonSlice.actions;
+export const { setCurrentSeason, setDriverStandings, setConstructorStandings, setRaces, setScoreSystem, setSeasons, setScoresSystems } = seasonSlice.actions;
 
 export const selectSeasonState = (state: RootState) => state.season;
-
 
 export default seasonSlice.reducer;

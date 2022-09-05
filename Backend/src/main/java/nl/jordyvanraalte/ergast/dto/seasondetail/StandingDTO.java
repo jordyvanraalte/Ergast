@@ -17,12 +17,12 @@ public class StandingDTO {
     private String position;
     private CompetitorDTO competitor;
     //double due to possibility of comma values (Belgium Grand prix 2021)
-    private double points;
+    private double score;
 
-    public StandingDTO(String position, CompetitorDTO competitor, double points) {
+    public StandingDTO(String position, CompetitorDTO competitor, double score) {
         this.position = position;
         this.competitor = competitor;
-        this.points = points;
+        this.score = score;
     }
 
     public String getPosition() {
@@ -33,7 +33,12 @@ public class StandingDTO {
         return competitor;
     }
 
-    public double getPoints() {
-        return points;
+    public double getScore() {
+        return score;
     }
 }
+
+
+
+
+

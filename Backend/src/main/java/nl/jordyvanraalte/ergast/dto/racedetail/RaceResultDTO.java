@@ -6,12 +6,12 @@ import nl.jordyvanraalte.ergast.entities.Driver;
 public class RaceResultDTO {
     private String position;
     private CompetitorDTO competitor;
-    private double points;
+    private double score;
 
-    public RaceResultDTO(String position, CompetitorDTO competitor, double points) {
+    public RaceResultDTO(String position, CompetitorDTO competitor, double score) {
         this.position = position;
         this.competitor = competitor;
-        this.points = points;
+        this.score = score;
     }
 
     public String getPosition() {
@@ -22,12 +22,12 @@ public class RaceResultDTO {
         return competitor;
     }
 
-    public double getPoints() {
-        return points;
+    public double getScore() {
+        return score;
     }
 
-    public void setPoints(double points) {
-        this.points = points;
+    public void setScore(double score) {
+        this.score = score;
     }
 
     public String getCompetitorName(){
